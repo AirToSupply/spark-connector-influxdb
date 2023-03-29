@@ -34,6 +34,7 @@
 
         <!-- InfluxDB Client -->
         <influxdb.scala.client.version>6.7.0</influxdb.scala.client.version>
+        <influxdb.dsl.version>6.7.0</influxdb.dsl.version>
 
         <!-- Spark Version -->
         <spark.version>3.2.3</spark.version>
@@ -55,9 +56,19 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.influxdb</groupId>
             <artifactId>influxdb-client-scala_${scala.binary.version}</artifactId>
             <version>${influxdb.scala.client.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.influxdb</groupId>
+            <artifactId>flux-dsl</artifactId>
+            <version>${influxdb.dsl.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
