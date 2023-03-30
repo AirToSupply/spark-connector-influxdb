@@ -41,12 +41,14 @@ SQL Stream may be also transferred into TDengine using:
 ## Configuration
 
 
-| Parameter Name | Description                         | Default Value | Read | Write |
-| -------------- | ----------------------------------- | ------------- | ---- | ----- |
-| host           | 【Require】InfluxDB Server host     | localhost     | ✅   | ✅    |
-| port           | 【Require】InfluxDB Server post     | 8086          | ✅   | ✅    |
-| user           | 【Require】InfluxDB Server user     |               | ✅   | ✅    |
-| password       | 【Require】InfluxDB Server password |               | ✅   | ✅    |
-| org            | 【Require】InfluxDB organization    |               | ✅   | ✅    |
-| bucket         | 【Require】InfluxDB bucket          |               | ✅   | ✅    |
-| measurement    | 【Require】InfluxDB measurement     |               | ✅   | ✅    |
+| Parameter Name | Description                                                     | Default Value | Read | Write |
+| -------------- | --------------------------------------------------------------- | ------------- | ---- | ----- |
+| host           | 【Require】InfluxDB Server host                                 | localhost     | ✅   | ✅    |
+| port           | 【Require】InfluxDB Server post                                 | 8086          | ✅   | ✅    |
+| user           | 【Require】InfluxDB Server user                                 |               | ✅   | ✅    |
+| password       | 【Require】InfluxDB Server password                             |               | ✅   | ✅    |
+| org            | 【Require】InfluxDB organization                                |               | ✅   | ✅    |
+| bucket         | 【Require】InfluxDB bucket                                      |               | ✅   | ✅    |
+| measurement    | 【Require】InfluxDB measurement                                 |               | ✅   | ✅    |
+| delta          | Incremental read from influxdb by minimum time slice (Unit: ms) | 1000          | ✅   |       |
+| zone           | Zone Id                                                         | Asia/Shanghai | ✅   |       |

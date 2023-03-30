@@ -2,6 +2,8 @@ package org.apache.spark.sql.influxdb.config
 
 import com.influxdb.client.InfluxDBClientOptions
 
+import java.time.ZoneId
+
 object FluxOptions {
 
   /**
@@ -41,6 +43,15 @@ object FluxOptions {
    */
   val OPTION_MEASUREMENT = "measurement"
 
+  /**
+   * delta
+   */
+  val OPTION_DELTA_MILLI_SECOND = "delta"
+  private val OPTION_DELTA_MILLI_SECOND_VALUE = "1000"
+
+  val OPTION_ZONE = "zone"
+  private val OPTION_ZONE_VALUE = ZoneId.systemDefault().toString
+
   def host(options: Map[String, String]) = options.getOrElse(OPTION_SERVER_HOST, OPTION_SERVER_HOST_VALUE)
 
   def port(options: Map[String, String]) = options.getOrElse(OPTION_SERVER_PORT, OPTION_SERVER_PORT_VALUE)
@@ -64,6 +75,11 @@ object FluxOptions {
   def measurement(options: Map[String, String]) = options.getOrElse(OPTION_MEASUREMENT, {
     throw new IllegalArgumentException(s"Option '${OPTION_MEASUREMENT}' must be require!")
   })
+
+  def deltaMilliSecond(options: Map[String, String]) =
+    options.getOrElse(OPTION_DELTA_MILLI_SECOND, OPTION_DELTA_MILLI_SECOND_VALUE).toLong
+
+  def zone(options: Map[String, String]) = options.getOrElse(OPTION_ZONE, OPTION_ZONE_VALUE)
 
   def createInfluxDBClientOptions(options: Map[String, String]) = InfluxDBClientOptions.builder()
     .url(s"http://${host(options)}:${port(options)}")

@@ -7,6 +7,8 @@ object Nanos {
 
   private val NANO_OF_SECONDS = scala.math.pow(10, 9).toLong
 
+  private val MILLIS_OF_SECONDS = scala.math.pow(10, 6).toLong
+
   /**
    * Parse UTC string format
    *
@@ -40,6 +42,10 @@ object Nanos {
     val (seconds, nanoSeconds) = toNanoSeconds(instant)
     seconds * NANO_OF_SECONDS + nanoSeconds
   }
+
+  def millisToNano(millis: Long) = millis * MILLIS_OF_SECONDS
+
+  def secondsToNano(seconds: Long) = seconds * NANO_OF_SECONDS
 
   /**
    * Transfer nano seconds (second + nano of second)
