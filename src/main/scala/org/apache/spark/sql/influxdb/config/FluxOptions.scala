@@ -44,13 +44,13 @@ object FluxOptions {
   val OPTION_MEASUREMENT = "measurement"
 
   /**
-   * delta
+   * delta time (Unit: ms)
    */
-  val OPTION_DELTA_MILLI_SECOND = "delta"
-  private val OPTION_DELTA_MILLI_SECOND_VALUE = "1000"
+  val OPTION_DELTA_TIME = "delta-time"
+  private val OPTION_DELTA_TIME_VALUE = "1000"
 
-  val OPTION_ZONE = "zone"
-  private val OPTION_ZONE_VALUE = ZoneId.systemDefault().toString
+  val OPTION_TIME_ZONE = "time-zone"
+  private val OPTION_TIME_ZONE_VALUE = ZoneId.systemDefault().toString
 
   def host(options: Map[String, String]) = options.getOrElse(OPTION_SERVER_HOST, OPTION_SERVER_HOST_VALUE)
 
@@ -76,10 +76,10 @@ object FluxOptions {
     throw new IllegalArgumentException(s"Option '${OPTION_MEASUREMENT}' must be require!")
   })
 
-  def deltaMilliSecond(options: Map[String, String]) =
-    options.getOrElse(OPTION_DELTA_MILLI_SECOND, OPTION_DELTA_MILLI_SECOND_VALUE).toLong
+  def deltaTime(options: Map[String, String]) =
+    options.getOrElse(OPTION_DELTA_TIME, OPTION_DELTA_TIME_VALUE).toLong
 
-  def zone(options: Map[String, String]) = options.getOrElse(OPTION_ZONE, OPTION_ZONE_VALUE)
+  def timeZone(options: Map[String, String]) = options.getOrElse(OPTION_TIME_ZONE, OPTION_TIME_ZONE_VALUE)
 
   def createInfluxDBClientOptions(options: Map[String, String]) = InfluxDBClientOptions.builder()
     .url(s"http://${host(options)}:${port(options)}")
