@@ -1,4 +1,5 @@
 package org.apache.spark.sql.influxdb.util
+
 object StopWatch {
 
   private var _start: Long = _
