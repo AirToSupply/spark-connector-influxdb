@@ -50,5 +50,5 @@ SQL Stream may be also transferred into TDengine using:
 | org            | 【Require】InfluxDB organization                                |               | ✅   | ✅    |
 | bucket         | 【Require】InfluxDB bucket                                      |               | ✅   | ✅    |
 | measurement    | 【Require】InfluxDB measurement                                 |               | ✅   | ✅    |
-| delta          | Incremental read from influxdb by minimum time slice (Unit: ms) | 1000          | ✅   |       |
-| zone           | Zone Id                                                         | Asia/Shanghai | ✅   |       |
+| delta-time     | Incremental read from influxdb by minimum time slice (Unit: ms) | 1000          | ✅   |       |
+| time-zone      | A time-zone ID, such as Europe/Paris.                           | Asia/Shanghai | ✅   |       |
