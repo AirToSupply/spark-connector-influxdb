@@ -2,6 +2,7 @@ package org.apache.spark.sql.influxdb.util
 
 import java.time.temporal.ChronoField
 import java.time.{Instant, ZoneId, ZonedDateTime}
+import java.util.concurrent.TimeUnit
 
 object Nanos {
 
@@ -63,6 +64,9 @@ object Nanos {
   def toNanoSeconds(instant: ZonedDateTime) = (
     instant.getLong(ChronoField.INSTANT_SECONDS) + instant.getOffset.getTotalSeconds.toLong,
     instant.getLong(ChronoField.NANO_OF_SECOND))
+
+  def add(instant: Instant, delta: Long, unit: TimeUnit = TimeUnit.MILLISECONDS) =
+    parse(toNano(instant) + unit.toNanos(delta))
 
   /**
    * Transfer nano by zone
