@@ -34,9 +34,28 @@ This library is only for Scala 2.12.x, so users should replace the proper Scala 
 
 ## Examples
 
-SQL Stream can be created with data streams received through TDengine using:
+SQL Stream can be created with data streams received through InfluxDB using:
 
-SQL Stream may be also transferred into TDengine using:
+```scala
+spark.readStream
+  .format(classOf[FluxSourceProvider].getName)
+  .option("host", "172.16.10.12")
+  .option("port", "8086")
+  .option("user", "influxdb")
+  .option("password", "influxdb")
+  .option("org", "org")
+  .option("bucket", "test_bucket")
+  .option("measurement", "sensor")
+  .load()
+```
+
+【TIPS】
+
+（1）The source uses the `Minimum Time Slice Algorithm` to extract data from InfluxDB through `incremental reads`.
+
+（2）The read data currently only supports raw record based on the StringType string situation of `Line Protocol`.
+
+SQL Stream may be also transferred into InfluxDB using:
 
 ## Configuration
 
