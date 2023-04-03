@@ -1,9 +1,11 @@
 package org.apache.spark.sql.influxdb.util
 
 import akka.actor.ActorSystem
-import akka.stream.scaladsl.Sink
+import akka.stream.scaladsl.{Keep, Sink, Source}
 import com.influxdb.client.InfluxDBClientOptions
+import com.influxdb.client.domain.WritePrecision
 import com.influxdb.client.scala.{InfluxDBClientScala, InfluxDBClientScalaFactory}
+import com.influxdb.client.write.Point
 import com.influxdb.query.FluxRecord
 import com.influxdb.query.dsl.Flux
 import com.influxdb.query.dsl.functions.restriction.Restrictions
@@ -145,6 +147,56 @@ class FluxClient(options: InfluxDBClientOptions) extends Logging {
       case e: Exception =>
         logError("Query between time range failed!", e)
         elements.toIterator
+    }
+  }
+
+  /**
+   * Write Line Protocol records into specified bucket.
+   *
+   * @param bucket
+   *
+   * @param record
+   *          e.g. "sensor,sid=1 pm25_aqi=101,pm10_aqi=172,no2_aqi=131,temperature=-1,pressure=925,humidity=210,wind=4,weather=2"
+   */
+  def writeRecordIterator(bucket: String, records: Iterator[String]) = {
+    StopWatch.start
+    try {
+      val source = Source.fromIterator(() => records)
+      val sink = _client.getWriteScalaApi.writeRecord(Some(WritePrecision.NS), Some(bucket))
+      val materialized = source.toMat(sink)(Keep.right)
+      Await.result(materialized.run(), Duration.Inf)
+      StopWatch.stop
+      logInfo(s"Write record iterator cost time: ${StopWatch.cost}ms")
+    } catch {
+      case e: Exception =>
+        logError("Write record iterator failed!", e)
+    }
+  }
+
+  /**
+   * Write Line Protocol records into specified bucket.
+   *
+   * @param bucket
+   * @param pointRecords
+   *          e.g.
+   *              val point = Point
+   *                .measurement("mem")
+   *                .addTag("host", "host1")
+   *                .addField("used_percent", 23.43234543)
+   *                .time(Instant.now(), WritePrecision.NS)
+   */
+  def writePointIterator(bucket: String, pointRecords: Iterator[Point]) = {
+    StopWatch.start
+    try {
+      val source = Source.fromIterator(() => pointRecords)
+      val sink = _client.getWriteScalaApi.writePoint()
+      val materialized = source.toMat(sink)(Keep.right)
+      Await.result(materialized.run(), Duration.Inf)
+      StopWatch.stop
+      logInfo(s"Write record iterator cost time: ${StopWatch.cost}ms")
+    } catch {
+      case e: Exception =>
+        logError("Write record iterator failed!", e)
     }
   }
 }
