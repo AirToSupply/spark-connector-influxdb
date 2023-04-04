@@ -130,6 +130,18 @@ class FluxClient(options: InfluxDBClientOptions) extends Logging {
     }
   }
 
+  /**
+   * Read record data within a given time interval about [t, t + δt] (δt -> 0) from the InfluxDB.
+   *
+   * [Question-1] Is the `range` method algorithm complexity convergent here.
+   * [Question-2] How to solve the `data skew` problem for time series data if the probability obeys the `Gaussian distribution`?
+   *
+   * @param bucket
+   * @param measurement
+   * @param start  start instant
+   * @param stop   end   instant
+   * @return Iterator[FluxRecord]
+   */
   def queryByTimeRange(bucket: String, measurement: String, start: Instant, stop: Instant) = {
     StopWatch.start
     val elements = scala.collection.mutable.ArrayBuffer[FluxRecord]()

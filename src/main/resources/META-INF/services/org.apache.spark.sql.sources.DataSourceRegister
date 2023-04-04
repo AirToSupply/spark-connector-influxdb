@@ -16,3 +16,4 @@
 #
 
 org.apache.spark.sql.influxdb.provider.FluxSourceProvider
+org.apache.spark.sql.influxdb.provider.FluxSinkProvider
