@@ -52,6 +52,17 @@ object FluxOptions {
   val OPTION_TIME_ZONE = "time-zone"
   private val OPTION_TIME_ZONE_VALUE = ZoneId.systemDefault().toString
 
+  /**
+   * batch size
+   */
+  val OPTION_BATCH_SIZE = "batchSize"
+  private val OPTION_BATCH_SIZE_VALUE = "1000"
+
+  /**
+   * partition number
+   */
+  val OPTION_PARTITION_NUM = "numPartitions"
+
   def host(options: Map[String, String]) = options.getOrElse(OPTION_SERVER_HOST, OPTION_SERVER_HOST_VALUE)
 
   def port(options: Map[String, String]) = options.getOrElse(OPTION_SERVER_PORT, OPTION_SERVER_PORT_VALUE)
@@ -80,6 +91,10 @@ object FluxOptions {
     options.getOrElse(OPTION_DELTA_TIME, OPTION_DELTA_TIME_VALUE).toLong
 
   def timeZone(options: Map[String, String]) = options.getOrElse(OPTION_TIME_ZONE, OPTION_TIME_ZONE_VALUE)
+
+  def batchSize(options: Map[String, String]) = options.getOrElse(OPTION_BATCH_SIZE, OPTION_BATCH_SIZE_VALUE).toInt
+
+  def numPartitions(options: Map[String, String]) = options.get(OPTION_PARTITION_NUM).map(_.toInt)
 
   def createInfluxDBClientOptions(options: Map[String, String]) = InfluxDBClientOptions.builder()
     .url(s"http://${host(options)}:${port(options)}")

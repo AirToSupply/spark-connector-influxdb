@@ -39,7 +39,7 @@ SQL Stream can be created with data streams received through InfluxDB using:
 ```scala
 spark.readStream
   .format(classOf[FluxSourceProvider].getName)
-  .option("host", "172.16.10.12")
+  .option("host", "localhost")
   .option("port", "8086")
   .option("user", "influxdb")
   .option("password", "influxdb")
@@ -57,6 +57,27 @@ spark.readStream
 
 SQL Stream may be also transferred into InfluxDB using:
 
+```scala
+spark.writeStream
+  .format(classOf[FluxSinkProvider].getName)
+  .outputMode(OutputMode.Append())
+  .option("host", "localhost")
+  .option("port", "8086")
+  .option("user", "influxdb")
+  .option("password", "influxdb")
+  .option("org", "org")
+  .option("bucket", "test_bucket")
+  .option("checkpointLocation", "/tmp")
+  .start()
+  .awaitTermination()
+```
+
+【TIPS】
+
+（1）The Sink only supports data sources based on `line protocols`.
+
+（2）`OutputMod`e mode only supports `append` mode.
+
 ## Configuration
 
 
@@ -68,6 +89,8 @@ SQL Stream may be also transferred into InfluxDB using:
 | password       | 【Require】InfluxDB Server password                             |               | ✅   | ✅    |
 | org            | 【Require】InfluxDB organization                                |               | ✅   | ✅    |
 | bucket         | 【Require】InfluxDB bucket                                      |               | ✅   | ✅    |
-| measurement    | 【Require】InfluxDB measurement                                 |               | ✅   | ✅    |
+| measurement    | 【Require】InfluxDB measurement                                 |               | ✅   |       |
 | delta-time     | Incremental read from influxdb by minimum time slice (Unit: ms) | 1000          | ✅   |       |
 | time-zone      | A time-zone ID, such as Europe/Paris.                           | Asia/Shanghai | ✅   |       |
+| batchSize      | Specify how many pieces of data to write as a batch.            | 1000          |      | ✅    |
+| numPartitions  | Number of partitions to write.                                  | None          |      | ✅    |
