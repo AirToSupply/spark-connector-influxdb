@@ -34,6 +34,8 @@ This library is only for Scala 2.12.x, so users should replace the proper Scala 
 
 ## Examples
 
+### Read
+
 SQL Stream can be created with data streams received through InfluxDB using:
 
 ```scala
@@ -49,11 +51,15 @@ spark.readStream
   .load()
 ```
 
+You can refer to [FluxStreamSourceApplication.scala](examples%2Fsrc%2Fmain%2Fscala%2Forg%2Fapache%2Fspark%2Fsql%2Fexample%2Fsource%2FFluxStreamSourceApplication.scala).
+
 【TIPS】
 
 （1）The source uses the `Minimum Time Slice Algorithm` to extract data from InfluxDB through `incremental reads`.
 
 （2）The read data currently only supports raw record based on the StringType string situation of `Line Protocol`.
+
+### Write
 
 SQL Stream may be also transferred into InfluxDB using:
 
@@ -71,6 +77,8 @@ spark.writeStream
   .start()
   .awaitTermination()
 ```
+
+You can refer to [FluxStreamSinkApplication.scala](examples%2Fsrc%2Fmain%2Fscala%2Forg%2Fapache%2Fspark%2Fsql%2Fexample%2Fsink%2FFluxStreamSinkApplication.scala).
 
 【TIPS】
 
