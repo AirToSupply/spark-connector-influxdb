@@ -4,7 +4,7 @@
 
     <groupId>tech.odes</groupId>
     <artifactId>spark-connector-influxdb</artifactId>
-    <version>${spark.version}.0</version>
+    <version>${spark.version}.1</version>
 
     <name>spark-connector-influxdb</name>
     <url>https://github.com/AirToSupply/spark-connector-influxdb</url>
