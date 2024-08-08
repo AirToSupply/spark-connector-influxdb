@@ -29,6 +29,11 @@ object FluxOptions {
   val OPTION_SERVER_PASSWORD = "password"
 
   /**
+   * server token
+   */
+  val OPTION_TOKEN = "token"
+
+  /**
    * org
    */
   val OPTION_ORG = "org"
@@ -75,6 +80,8 @@ object FluxOptions {
     throw new IllegalArgumentException(s"Option '${OPTION_SERVER_PASSWORD}' must be require!")
   })
 
+  def token(options: Map[String, String]) = options.get(OPTION_TOKEN)
+
   def org(options: Map[String, String]) = options.getOrElse(OPTION_ORG, {
     throw new IllegalArgumentException(s"Option '${OPTION_ORG}' must be require!")
   })
@@ -96,9 +103,20 @@ object FluxOptions {
 
   def numPartitions(options: Map[String, String]) = options.get(OPTION_PARTITION_NUM).map(_.toInt)
 
-  def createInfluxDBClientOptions(options: Map[String, String]) = InfluxDBClientOptions.builder()
-    .url(s"http://${host(options)}:${port(options)}")
-    .authenticate(user(options), password(options).toCharArray)
-    .org(org(options))
-    .build()
+  def createInfluxDBClientOptions(options: Map[String, String]) = token(options) match {
+    // token access
+    case Some(token) =>
+      InfluxDBClientOptions.builder()
+        .url(s"http://${host(options)}:${port(options)}")
+        .authenticateToken(token.toCharArray)
+        .org(org(options))
+        .build()
+    // username && pass access
+    case None =>
+      InfluxDBClientOptions.builder()
+        .url(s"http://${host(options)}:${port(options)}")
+        .authenticate(user(options), password(options).toCharArray)
+        .org(org(options))
+        .build()
+  }
 }

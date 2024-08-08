@@ -90,14 +90,15 @@ You can refer to [FluxStreamSinkApplication.scala](examples%2Fsrc%2Fmain%2Fscala
 
 
 | Parameter Name | Description                                                     | Default Value | Read | Write |
-| -------------- | --------------------------------------------------------------- | ------------- | ---- | ----- |
-| host           | 【Require】InfluxDB Server host                                 | localhost     | ✅   | ✅    |
-| port           | 【Require】InfluxDB Server post                                 | 8086          | ✅   | ✅    |
-| user           | 【Require】InfluxDB Server user                                 |               | ✅   | ✅    |
-| password       | 【Require】InfluxDB Server password                             |               | ✅   | ✅    |
-| org            | 【Require】InfluxDB organization                                |               | ✅   | ✅    |
-| bucket         | 【Require】InfluxDB bucket                                      |               | ✅   | ✅    |
-| measurement    | 【Require】InfluxDB measurement                                 |               | ✅   |       |
+|----------------|-----------------------------------------------------------------| ------------- | ---- | ----- |
+| host           | 【Require】InfluxDB Server host                                   | localhost     | ✅   | ✅    |
+| port           | 【Require】InfluxDB Server post                                   | 8086          | ✅   | ✅    |
+| user           | 【Require】InfluxDB Server user                                   |               | ✅   | ✅    |
+| password       | 【Require】InfluxDB Server password                               |               | ✅   | ✅    |
+| token          | InfluxDB Server access token                                    |               | ✅   | ✅    |
+| org            | 【Require】InfluxDB organization                                  |               | ✅   | ✅    |
+| bucket         | 【Require】InfluxDB bucket                                        |               | ✅   | ✅    |
+| measurement    | 【Require】InfluxDB measurement                                   |               | ✅   |       |
 | delta-time     | Incremental read from influxdb by minimum time slice (Unit: ms) | 1000          | ✅   |       |
 | time-zone      | A time-zone ID, such as Europe/Paris.                           | Asia/Shanghai | ✅   |       |
 | batchSize      | Specify how many pieces of data to write as a batch.            | 1000          |      | ✅    |
